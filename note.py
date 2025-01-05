@@ -1,3 +1,2 @@
-n = [3, 2, 1, 3]
-s = set(n)
-print(s)
+print('hellow'.startswith('hello'))
+print(sorted(['12', '13', '1', '1234', '133', '131']))
