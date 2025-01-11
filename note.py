@@ -1,2 +1,15 @@
-print('hellow'.startswith('hello'))
-print(sorted(['12', '13', '1', '1234', '133', '131']))
+arr = [['a', 1], ['b', 2], ['a', 3]]
+dic = {}
+
+for item in arr:
+    key, value = item
+    if key in dic:
+        dic[key].append(value)
+    else:
+        dic[key] = [value]
+
+s = 0
+for arr in dic.values():
+    s += len(arr)
+
+print(s)
