@@ -2,8 +2,8 @@ def solution(bridge_length, weight, truck_weights):
     from collections import deque
 
     time = 0
-    bridge = deque(maxlen=bridge_length)
-    times = deque(maxlen=bridge_length)
+    bridge = deque()
+    times = deque()
 
     while len(truck_weights) or len(bridge):
         if len(times) and times[0] <= time:
