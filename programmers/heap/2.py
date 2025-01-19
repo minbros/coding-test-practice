@@ -3,7 +3,6 @@
 
 def solution(jobs):
     import heapq
-    from collections import deque
 
     i = 0
     time = 0
