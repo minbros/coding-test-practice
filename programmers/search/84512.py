@@ -1,5 +1,5 @@
 # 모음 사전
-
+# https://school.programmers.co.kr/learn/courses/30/lessons/84512
 
 def solution(word):
     dic = ["A", "E", "I", "O", "U"]
