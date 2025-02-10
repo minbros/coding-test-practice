@@ -1,0 +1,11 @@
+-- 물고기 종류 별 대어 찾기
+-- https://school.programmers.co.kr/learn/courses/30/lessons/293261
+
+SELECT I.ID, N.FISH_NAME, I.LENGTH
+FROM FISH_INFO AS I
+         JOIN FISH_NAME_INFO AS N
+              ON I.FISH_TYPE = N.FISH_TYPE
+WHERE (N.FISH_TYPE, I.LENGTH) IN (SELECT FISH_TYPE, MAX(LENGTH) AS MAX_LENGTH
+                 FROM FISH_INFO
+                 GROUP BY FISH_TYPE)
+ORDER BY ID;
