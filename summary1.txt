@@ -1,0 +1,11 @@
+GROUP BY 함수는 해당 열이 중복되는 행들을 하나로 그룹화하는 함수이다.
+COUNT, MAX 등의 집계 함수와 같이 사용하지 않고 단순히
+SELECT A FROM TABLE GROUP BY A
+와 같이 사용하면, A에서 중복된 값들을 제외시켜 주는 효과를 가진다.
+
+CASE WHEN은 SELECT와 FROM 사이에 사용하는데
+CASE WHEN을 사용한 구문도 하나의 열로 치기 때문에 ,로 구분을 해주어야 한다.
+예를 들어서
+SELECT A, B, CASE WHEN {...} FROM TABLE
+과 같이 사용해야 한다.
+WHEN과 THEN은 같이 사용되어야 하며, ELSE의 경우에는 THEN은 사용되지 않는다.
