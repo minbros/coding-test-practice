@@ -1,0 +1,16 @@
+SQL에서도 순서쌍과 같은 개념으로
+WHERE (COLUMN_A, COLUMN_B) IN ( ... )
+과 같이 적용해 조건문을 간단하게 구성할 수 있다.
+물론 순서쌍 안의 열 개수와 뒤에 오는 서브쿼리의 열 개수는 동일해야 한다.
+
+CONCAT 함수를 통해 COLUMN의 값에 문자열을 추가할 수 있다.
+CONCAT(LENGTH, 'cm')와 같이 사용하면
+LENGTH에 있는 값들 뒤에 'cm' 문자열이 추가된다.
+문자열은 앞에 추가할 수도 있고, CONCAT 함수에 하나가 아닌 여러 문자열이나 열을 넣을 수도 있다.
+
+AS 별칭은 SELECT 결과 생성 이후부터 사용 가능하다.
+WHERE, GROUP BY, HAVING 절에서는 별칭 대신 원본 열을 사용하거나 서브쿼리를 작성해야 한다.
+ORDER BY에서는 AS 별칭 사용 가능하다.
+
+MySQL에서의 내부 처리 순서는 다음과 같다.(AI 피셜)
+FROM → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT
