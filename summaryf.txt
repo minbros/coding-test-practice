@@ -8,3 +8,8 @@ data는 iterable한 객체여야 하고, length는 순열의 길이인데 기본
 itertools.permutations("ABC")를 사용하면 가능한 순열이 ('A', 'B', 'C')와 같이
 요소들을 하나씩 끊어서 튜플 형태로 저장되어 배열로 반환된다.
 간단하게 경우의 수만 구하고 싶다면 math.perm(x)를 사용하면 된다.
+
+fuctools의 cmp_to_key 라이브러리를 통해, sort()와 같이 key 함수를 파라미터로 받는 경우
+둘의 위치를 교체하길 원하면 -1을 반환하고, 그대로 유지하길 원하면 1을 반환하게 만들어서
+새로운 함수를 정의하고(ex. compare) sort() 함수에
+sort(arr, key=cmp_to_key(compare))과 같이 사용하면 정렬에 잘 적용된다.
