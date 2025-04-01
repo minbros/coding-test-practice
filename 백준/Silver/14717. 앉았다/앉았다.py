@@ -3,11 +3,7 @@ import math
 from itertools import combinations
 
 input = sys.stdin.readline
-cards = []
-for i in range(1, 10 + 1):
-    cards.append(i)
-    cards.append(i)
-
+cards = list(range(1, 11)) * 2
 me = list(map(int, input().split()))
 for c in me:
     cards.remove(c)
