@@ -8,8 +8,9 @@ players = list(range(1, n + 1))
 cases = list(itertools.combinations(players, n // 2))
 val = float('inf')
 
-for team1 in cases[:len(cases) // 2]:
-    team2 = tuple(x for x in players if x not in team1)
+for index in range(len(cases) // 2):
+    team1 = cases[index]
+    team2 = cases[-(index + 1)]
     stat1 = stat2 = 0
     for i, j in itertools.permutations(team1, 2):
         stat1 += table[i - 1][j - 1]
