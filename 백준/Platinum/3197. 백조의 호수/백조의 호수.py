@@ -9,6 +9,8 @@ visited_swan = [[False for _ in range(C)] for _ in range(R)]
 
 melted = set()
 visited_water = [[False for _ in range(C)] for _ in range(R)]
+
+ice_count = 0
 for r in range(R):
     for c in range(C):
         if lake[r][c] == 'L':
@@ -17,6 +19,8 @@ for r in range(R):
         elif lake[r][c] == '.':
             melted.add((r, c))
             visited_water[r][c] = True
+        else:
+            ice_count += 1
 
 x, y = swans[0]
 start = {(x, y)}
@@ -58,13 +62,14 @@ def can_swans_meet():
 
 
 result = 0
-while True:
+while ice_count > 0:
     if can_swans_meet():
-        print(result)
-        quit()
+        break
 
     melt()
     for r, c in melted:
         lake[r][c] = '.'
 
     result += 1
+
+print(result)
