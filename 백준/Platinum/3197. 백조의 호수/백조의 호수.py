@@ -19,25 +19,27 @@ for r in range(R):
             visited_water[r][c] = True
 
 x, y = swans[0]
+start = {(x, y)}
 visited_swan[x][y] = True
 
 
 def melt():
+    global melted
     queue = deque(melted)
-    new_melted = set()
+    melted = set()
     while queue:
         i, j = queue.popleft()
         for di, dj in directions:
             ni, nj = i + di, j + dj
             if 0 <= ni < R and 0 <= nj < C and not visited_water[ni][nj] and lake[ni][nj] == 'X':
-                new_melted.add((ni, nj))
+                melted.add((ni, nj))
                 visited_water[ni][nj] = True
 
-    return new_melted
 
-
-def can_swans_meet(_start):
-    queue = deque(_start)
+def can_swans_meet():
+    global start
+    queue = deque(start)
+    start = set()
     while queue:
         i, j = queue.popleft()
         if (i, j) == swans[1]:
@@ -45,36 +47,24 @@ def can_swans_meet(_start):
 
         for di, dj in directions:
             ni, nj = i + di, j + dj
-            if 0 <= ni < R and 0 <= nj < C and not visited_swan[ni][nj] and lake[ni][nj] != 'X':
-                queue.append((ni, nj))
+            if 0 <= ni < R and 0 <= nj < C and not visited_swan[ni][nj]:
                 visited_swan[ni][nj] = True
+                if lake[ni][nj] == 'X':
+                    start.add((ni, nj))
+                else:
+                    queue.append((ni, nj))
 
     return False
 
 
-def p(matrix):
-    for row in matrix:
-        print(*row)
-
-    print()
-
-
 result = 0
-start = {(x, y)}
 while True:
-    if can_swans_meet(start):
+    if can_swans_meet():
         print(result)
         quit()
 
-    melted = melt()
-    start = set()
+    melt()
     for r, c in melted:
         lake[r][c] = '.'
-        for dr, dc in directions:
-            nr, nc = r + dr, c + dc
-            if 0 <= nr < R and 0 <= nc < C and visited_swan[nr][nc]:
-                start.add((r, c))
-                visited_swan[r][c] = True
-                break
 
     result += 1
