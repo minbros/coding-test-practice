@@ -33,6 +33,8 @@ def is_palindrome(start, end):
     return dp[start][end]
 
 
+result = []
 for _ in range(m):
     s, e = map(int, input().split())
-    print(is_palindrome(s, e))
+    result.append(str(is_palindrome(s, e)))
+print('\n'.join(result))
