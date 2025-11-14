@@ -21,5 +21,5 @@ for i in range(n):
             costs[to] = costs[now] + cost
 
 if succeeded:
-    for cost in costs[2:]:
-        print(-1 if cost == INF else cost)
+    result = [-1 if cost == INF else cost for cost in costs[2:]]
+    print('\n'.join(map(str, result)))
