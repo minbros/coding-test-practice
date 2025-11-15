@@ -46,7 +46,7 @@ graph = defaultdict(list)
 for _ in range(k):
     u, v, c, d = map(int, input().split())
     graph[u].append((d, c, v))
-    
+
 for key in graph.keys():
     graph[key].sort()
 
