@@ -11,6 +11,9 @@ for _ in range(e):
 
 for k in range(v):
     for i in range(v):
+        if roads[i][k] == INF:
+            continue
+            
         for j in range(v):
             roads[i][j] = min(roads[i][j], roads[i][k] + roads[k][j])
 
