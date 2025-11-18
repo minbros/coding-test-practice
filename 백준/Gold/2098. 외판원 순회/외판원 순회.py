@@ -1,15 +1,16 @@
 import sys
 
-input = lambda: sys.stdin.readline()
+input = sys.stdin.readline
+INF = int(1e9)
 
 n = int(input())
 dist = [list(map(int, input().split())) for _ in range(n)]
-dp = [[float('inf')] * n for _ in range(1 << (n - 1))]
+dp = [[INF] * (1 << (n - 1)) for _ in range(n)]
 dp[0][0] = 0
 
 for visited in range(1 << (n - 1)):
     for cur_node in range(n):
-        if dp[visited][cur_node] == float('inf'):
+        if dp[cur_node][visited] == INF:
             continue
 
         for next_node in range(1, n):
@@ -18,14 +19,14 @@ for visited in range(1 << (n - 1)):
                 continue
 
             new_visited = visited | bit_pos
-            new_cost = dp[visited][cur_node] + dist[cur_node][next_node]
-            dp[new_visited][next_node] = min(dp[new_visited][next_node], new_cost)
+            new_cost = dp[cur_node][visited] + dist[cur_node][next_node]
+            dp[next_node][new_visited] = min(dp[next_node][new_visited], new_cost)
 
-result = float('inf')
-for node, cost in enumerate(dp[-1]):
-    if dist[node][0] == 0:
+full_mask = (1 << (n - 1)) - 1
+result = INF
+for node in range(n):
+    if dp[node][full_mask] == INF or dist[node][0] == 0:
         continue
-
-    result = min(result, cost + dist[node][0])
+    result = min(result, dp[node][full_mask] + dist[node][0])
 
 print(result)
