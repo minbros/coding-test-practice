@@ -2,18 +2,13 @@ import sys
 
 input = lambda: sys.stdin.readline()
 
-
-def solve():
-    dp = [0] * (n + 1)
-    dp[0] = 1
-    for k in (1, 2, 3):
-        for i in range(k, n + 1):
-            dp[i] += dp[i - k]
-
-    return dp[n]
-
-
 t = int(input())
-for _ in range(t):
-    n = int(input())
-    print(solve())
+inputs = [int(input()) for _ in range(t)]
+m = max(inputs)
+dp = [1] + [0] * m
+for k in (1, 2, 3):
+    for i in range(k, m + 1):
+        dp[i] += dp[i - k]
+
+for i in inputs:
+    print(dp[i])
