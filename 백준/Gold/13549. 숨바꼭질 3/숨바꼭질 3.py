@@ -3,7 +3,7 @@ from collections import deque
 
 input = lambda: sys.stdin.readline()
 
-LIMIT = 140_000
+LIMIT = 100_001
 
 n, k = map(int, input().split())
 visited = [False] * (LIMIT + 1)
