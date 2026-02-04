@@ -19,10 +19,12 @@ while heap:
     if costs[cur] < dist:
         continue
 
+    if cur == n:
+        print(costs[n])
+        break
+
     for more, end in graph[cur]:
         new_cost = dist + more
         if costs[end] > new_cost:
             costs[end] = new_cost
             heapq.heappush(heap, (new_cost, end))
-
-print(costs[-1])
