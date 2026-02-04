@@ -13,6 +13,7 @@ for _ in range(m):
     graph[b].append((c, a))
 
 costs = [INF] * (n + 1)
+costs[1] = 0
 heap = [(0, 1)]
 while heap:
     dist, cur = heapq.heappop(heap)
