@@ -1,53 +1,64 @@
-n, m = map(int, input().split())
-grid = [list(map(int, input().split())) for _ in range(n)]
-cctv = []
-wall = []
-for i in range(n):
-    for j in range(m):
-        value = grid[i][j]
-        if value == 6:
-            wall.append((i, j))
-        elif value != 0:
-            cctv.append((i, j))
+import sys
+input=sys.stdin.readline
 
-cases = {
-    1: [((1, 0),), ((0, 1),), ((-1, 0),), ((0, -1),)],
-    2: [((1, 0), (-1, 0)), ((0, 1), (0, -1))],
-    3: [((1, 0), (0, 1)), ((1, 0), (0, -1)), ((0, 1), (-1, 0)), ((-1, 0), (0, -1))],
-    4: [((1, 0), (0, 1), (-1, 0)), ((1, 0), (0, 1), (0, -1)), ((1, 0), (-1, 0), (0, -1)), ((0, 1), (-1, 0), (0, -1))],
-    5: [((1, 0), (0, 1), (-1, 0), (0, -1))]
+UP, RIGHT, DOWN, LEFT=(-1, 0), (0, 1), (1, 0), (0,-1)
+
+CCTV={
+    1: [[DOWN], [UP], [RIGHT], [LEFT]],
+    2: [[DOWN, UP], [RIGHT, LEFT]],
+    3: [[UP, RIGHT], [RIGHT, DOWN], [DOWN, LEFT], [LEFT, UP]],
+    4: [[RIGHT, UP, LEFT], [DOWN, UP, LEFT], [DOWN, RIGHT, LEFT], [DOWN, RIGHT, UP]],
+    5: [[DOWN, RIGHT, UP, LEFT]]
 }
-result = 1e8
 
+BLANK=0
+WALL=6
 
-def enable_cctv(r, c, directions):
-    _visited = set()
-    for direction in directions:
-        dr, dc = direction
-        nr, nc = r + dr, c + dc
-        while 0 <= nr < n and 0 <= nc < m and grid[nr][nc] != 6:
-            if grid[nr][nc] == 0:
-                _visited.add((nr, nc))
-            nr += dr
-            nc += dc
+def cctv_path(office, n, m, direction, visited):
+    cctv_visited=set()
 
-    return _visited
+    for dn, dm in direction:
+        new_n, new_m=n, m
+        # print(f'방향: {dn, dm}')
+        while True:
+            new_n, new_m = new_n + dn, new_m + dm
+            # print(f'new:{new_n, new_m}')
+            #갈 수 있는 끝까지 감
+            if not (0<=new_n<N and 0<=new_m<M): break            
+            if office[new_n][new_m]==WALL: break
+            
+            if (new_n, new_m) in visited: continue # 이미 다른 CCTV가 방문한 장소    
+            if office[new_n][new_m]>0: continue # CCTV를 만남
 
+            # print('-> 추가됨')
+            cctv_visited.add((new_n, new_m))
 
-def solve(count, visited):
-    global result
-    if count == len(cctv):
-        cmp = n * m - len(wall) - len(cctv) - len(visited)
-        if cmp < result:
-            result = cmp
+    return cctv_visited
 
+def dfs(depth, visited):
+    # 모든 CCTV의 방향 조합 완전탐색
+    global min_blind, blank_cnt
+
+    if depth == len(cctvs): #모든 CCTV 완료
+        min_blind = min(min_blind, blank_cnt-len(visited))
         return
 
-    r, c = cctv[count]
-    for case in cases[grid[r][c]]:
-        _visited = visited | enable_cctv(r, c, case)
-        solve(count + 1, _visited)
+    (n, m), c_type = cctvs[depth]
+
+    for dirs in CCTV[c_type]:
+        new_visited = visited | cctv_path(office, n, m, dirs, visited)
+        dfs(depth + 1, new_visited)
+
+N, M=map(int, input().split())
+office=[list(map(int, input().split()))for _ in range(N)]
 
 
-solve(0, set())
-print(result)
+# CCTV 목록 저장
+cctvs = [((n, m), office[n][m]) 
+         for n in range(N) for m in range(M)
+         if 1 <= office[n][m] <= 5]
+blank_cnt=sum(1 for n in range(N) for m in range(M) if office[n][m]==BLANK)
+
+min_blind = 10**9
+dfs(0, set())
+print(min_blind)
