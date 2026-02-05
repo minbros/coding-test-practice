@@ -2,39 +2,32 @@ import sys
 
 input = lambda: sys.stdin.readline()
 lights = {
-    '0': '1110111',
-    '1': '0010010',
-    '2': '1011101',
-    '3': '1011011',
-    '4': '0111010',
-    '5': '1101011',
-    '6': '1101111',
-    '7': '1010010',
-    '8': '1111111',
-    '9': '1111011'
+    '0': 0b1110111,
+    '1': 0b0010010,
+    '2': 0b1011101,
+    '3': 0b1011011,
+    '4': 0b0111010,
+    '5': 0b1101011,
+    '6': 0b1101111,
+    '7': 0b1010010,
+    '8': 0b1111111,
+    '9': 0b1111011
 }
 
 
 def get_counts(a, b):
-    if a == b:
-        return 0
-
-    return [d1 != d2 for d1, d2 in zip(lights[a], lights[b])].count(True)
+    return bin(lights[a] ^ lights[b]).count('1')
 
 
 n, k, p, x = map(int, input().split())
 default = str(x).zfill(k)
 answer = 0
 for num in range(1, n + 1):
+    if num == x:
+        continue
+
     target = str(num).zfill(k)
-    count = 0
-    possible = True
-    for default_digit, target_digit in zip(default, target):
-        count += get_counts(default_digit, target_digit)
-        if count > p:
-            possible = False
-            break
+    count = sum(get_counts(d1, d2) for d1, d2 in zip(default, target))
+    answer += int(count <= p)
 
-    answer += int(possible)
-
-print(answer - 1)
+print(answer)
