@@ -47,10 +47,8 @@ for i in range(8, m + 1):
             cmp = cur[0] + '0' + cur[1:]
         else:
             zero_count = cur.count('0')
-            if val < int(cur[0]):
-                cmp = str(val) + cur[1: zero_count + 1] + cur[0] + cur[zero_count + 1:]
-            else:
-                cmp = cur[:zero_count + 1] + ''.join(sorted(cur[zero_count + 1:] + str(val)))
+            cmp = ''.join(sorted(cur[0] + cur[zero_count + 1:] + str(val)))
+            cmp = cmp[0] + '0' * zero_count + cmp[1:]
 
         dp[i] = min(dp[i], int(cmp))
 
