@@ -13,16 +13,18 @@ def bfs():
         if d > max_d:
             fires = move_fire()
             max_d += 1
-            
-        if not fire_visited[x][y]:
-            for dx, dy in directions:
-                nx, ny = x + dx, y + dy
-                if nx in (-1, r) or ny in (-1, c):
-                    return d + 1
 
-                if in_bound(nx, ny) and not visited[nx][ny] and grid[nx][ny] == '.' and not fire_visited[nx][ny]:
-                    queue.append((nx, ny, d + 1))
-                    visited[nx][ny] = True
+        if fire_visited[x][y]:
+            continue
+
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if nx in (-1, r) or ny in (-1, c):
+                return d + 1
+
+            if in_bound(nx, ny) and not visited[nx][ny] and grid[nx][ny] == '.' and not fire_visited[nx][ny]:
+                queue.append((nx, ny, d + 1))
+                visited[nx][ny] = True
 
     return 'IMPOSSIBLE'
 
