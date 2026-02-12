@@ -6,7 +6,7 @@ input = lambda: sys.stdin.readline()
 def count_stars(i1, i2, j1, j2):
     result = 0
     for i, j in stars:
-        if (i - i1) * (i - i2) <= 0 and (j - j1) * (j - j2) <= 0:
+        if i1 <= i <= i2 and j1 <= j <= j2:
             result += 1
 
     return result
