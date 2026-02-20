@@ -6,7 +6,7 @@ input = lambda: sys.stdin.readline()
 n = int(input())
 seq = list(map(int, input().split()))
 lis = []
-parent = []
+parent = [0] * n
 for i, x in enumerate(seq):
     idx = bisect.bisect_left(lis, x)
     if idx >= len(lis):
@@ -14,13 +14,13 @@ for i, x in enumerate(seq):
     else:
         lis[idx] = x
 
-    parent.append(idx)
+    parent[i] = idx
 
 print(len(lis))
 answer = []
-k = len(lis)
+k = len(lis) - 1
 for i in range(n - 1, -1, -1):
-    if parent[i] + 1 == k:
+    if parent[i] == k:
         answer.append(seq[i])
         k -= 1
 
